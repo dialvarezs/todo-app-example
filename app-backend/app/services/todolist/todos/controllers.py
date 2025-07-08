@@ -7,6 +7,8 @@ from litestar.dto import DTOData
 
 from app.models.todolist import Todo
 
+from ..categories.repositories import CategoryRepository, provide_category_repository
+from .dtos import TodoDTO
 from .repositories import TodoRepository, provide_todo_repository
 
 
@@ -17,6 +19,7 @@ def not_found_error_handler(_: Request[Any, Any, Any], __: NotFoundError) -> Res
 class TodoController(Controller):
     path = "/todos"
     tags = ["todolist / todos"]
+    dto = TodoDTO
     dependencies = {"todos_repo": Provide(provide_todo_repository)}
     exception_handlers = {
         NotFoundError: not_found_error_handler,
@@ -32,10 +35,19 @@ class TodoController(Controller):
         """Get a TODO item by ID."""
         return todos_repo.get_one(id=todo_id)
 
-    @post(path="/", summary="CreateTodo")
-    async def create(self, todo: Todo, todos_repo: TodoRepository) -> Todo:
+    @post(
+        path="/",
+        summary="CreateTodo",
+        dependencies={"categories_repo": Provide(provide_category_repository)},
+    )
+    async def create(
+        self,
+        todo: Todo,
+        todos_repo: TodoRepository,
+        categories_repo: CategoryRepository,
+    ) -> Todo:
         """Create a new TODO item."""
-        return todos_repo.add(todo)
+        return todos_repo.add(categories_repo, todo)
 
     @patch(path="/{todo_id:int}", summary="UpdateTodo")
     async def update(self, todo_id: int, data: DTOData[Todo], todos_repo: TodoRepository) -> Todo:
