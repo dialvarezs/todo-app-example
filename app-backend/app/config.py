@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     cors_allowed_origins: list[str] = ["http://localhost:3000"]
 
     model_config = SettingsConfigDict(
-        toml_file=Path("config.toml").resolve(),
+        env_file=Path(".env"),
         extra="ignore",
     )
 
