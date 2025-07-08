@@ -6,6 +6,7 @@ from app.models.todolist import Todo
 
 class TodoRepository(SQLAlchemySyncRepository[Todo]):
     """Repository for managing TODO items."""
+
     model_type = Todo
 
 
