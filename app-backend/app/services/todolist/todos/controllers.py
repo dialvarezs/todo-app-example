@@ -19,7 +19,6 @@ def not_found_error_handler(_: Request[Any, Any, Any], __: NotFoundError) -> Res
 class TodoController(Controller):
     path = "/todos"
     tags = ["todolist / todos"]
-    dto = TodoDTO
     dependencies = {"todos_repo": Provide(provide_todo_repository)}
     exception_handlers = {
         NotFoundError: not_found_error_handler,
