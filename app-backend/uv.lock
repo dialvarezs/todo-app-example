@@ -65,6 +65,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "just-bin" },
     { name = "ruff" },
 ]
 
@@ -76,7 +77,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "ruff", specifier = ">=0.12.2" }]
+dev = [
+    { name = "just-bin", specifier = ">=1.40.0" },
+    { name = "ruff", specifier = ">=0.12.2" },
+]
 
 [[package]]
 name = "certifi"
@@ -260,6 +264,17 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ea/98/d6cadf4d5a1c03b2136837a435682418c29fdeb66be137128544cecc5b7a/jsbeautifier-1.15.4.tar.gz", hash = "sha256:5bb18d9efb9331d825735fbc5360ee8f1aac5e52780042803943aa7f854f7592", size = 75257 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2d/14/1c65fccf8413d5f5c6e8425f84675169654395098000d8bddc4e9d3390e1/jsbeautifier-1.15.4-py3-none-any.whl", hash = "sha256:72f65de312a3f10900d7685557f84cb61a9733c50dcc27271a39f5b0051bf528", size = 94707 },
+]
+
+[[package]]
+name = "just-bin"
+version = "1.40.0"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/47/85/c49f7ecd6ee4790c376fd6921db945704c7161d45941e129a86fc1ba5b29/just_bin-1.40.0-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:5fc63b7817e539e79b7b0d0ef8ae913fec9b38d0e4a11c9dad82bfed5d63970f", size = 1730239 },
+    { url = "https://files.pythonhosted.org/packages/60/62/410e12011b4a19f9de25981816296323ab5fbc875c520ca0bf8d8196db24/just_bin-1.40.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:e509e4050e8a0f44b782f0ab82108282bf6145a536739941d348ca80a94454a6", size = 1599038 },
+    { url = "https://files.pythonhosted.org/packages/5b/20/d51ab63cdc335bde9c0ca02f7d041bbd07429835391fc2cd37f5fa444fc6/just_bin-1.40.0-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl", hash = "sha256:4c5c34e531bb5b0c9517b4e97afaf293328a9f000f4741dfc239a2fa52942f10", size = 1908867 },
+    { url = "https://files.pythonhosted.org/packages/c0/a9/51bbefa1f45f4fdc002f99fa696bd7f16cc78cbf0fb4d1f0b95229f2a58c/just_bin-1.40.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl", hash = "sha256:fb58d18ad818b55cf66f522a1d83e6c0c8f6faabf8d659c4f4447f378daf7f86", size = 1731810 },
 ]
 
 [[package]]

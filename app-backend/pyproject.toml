@@ -10,6 +10,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "just-bin>=1.40.0",
     "ruff>=0.12.2",
 ]
 
