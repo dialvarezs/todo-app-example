@@ -1,6 +1,6 @@
-from advanced_alchemy.base import CommonTableAttributes, DefaultBase
+from advanced_alchemy.base import CommonTableAttributes
 from sqlalchemy.orm import DeclarativeBase
 
 
-class Base(DefaultBase):
+class Base(DeclarativeBase, CommonTableAttributes):
     pass
