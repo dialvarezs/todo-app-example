@@ -11,12 +11,12 @@ class TodoRepository(SQLAlchemySyncRepository[Todo]):
 
     model_type = Todo
 
-    def add_with_existing_categories(self, categories_repo: CategoryRepository, todo: Todo):
+    def add_with_existing_categories(self, categories_repo: CategoryRepository, todo: Todo, **kwargs) -> Todo:
         """Add a TODO item using existing categories, matching by id."""
         todo.categories = categories_repo.list(
             CollectionFilter(field_name="id", values=[cat.id for cat in todo.categories])
         )
-        self.add(todo)
+        self.add(todo, **kwargs)
 
         return todo
 
