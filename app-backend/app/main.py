@@ -4,6 +4,7 @@ from litestar.logging import StructLoggingConfig
 from litestar.middleware.logging import LoggingMiddlewareConfig
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.plugins import ScalarRenderPlugin
+from litestar.openapi.spec import Server
 from litestar.plugins.structlog import StructlogConfig, StructlogPlugin
 
 from .config import settings
@@ -14,6 +15,8 @@ openapi_config = OpenAPIConfig(
     title="Todo List API",
     version="1.0.0",
     render_plugins=[ScalarRenderPlugin()],
+    path="/schema",
+    servers=[Server(url="")],
 )
 structlog_plugin = StructlogPlugin(
     config=StructlogConfig(

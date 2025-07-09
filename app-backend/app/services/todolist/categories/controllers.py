@@ -16,7 +16,7 @@ def not_found_error_handler(_: Request[Any, Any, Any], __: NotFoundError) -> Res
 
 class CategoryController(Controller):
     path = "/categories"
-    tags = ["todolist / categories"]
+    tags = ["todolist | categories"]
     dependencies = {"categories_repo": Provide(provide_category_repository)}
     exception_handlers = {
         NotFoundError: not_found_error_handler,

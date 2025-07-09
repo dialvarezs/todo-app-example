@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     debug: bool = False
-    database_url: AnyUrl = AnyUrl("sqlite:///lmmlis.sqlite3")
+    database_url: AnyUrl = AnyUrl("sqlite:///todolist.sqlite3")
     secret_key: SecretStr = SecretStr("secret")
     cors_allowed_origins: list[str] = ["*"]
 

@@ -18,11 +18,10 @@ def not_found_error_handler(_: Request[Any, Any, Any], __: NotFoundError) -> Res
 
 class TodoController(Controller):
     path = "/todos"
-    tags = ["todolist / todos"]
+    tags = ["todolist | todos"]
+    dto = TodoDTO
     dependencies = {"todos_repo": Provide(provide_todo_repository)}
-    exception_handlers = {
-        NotFoundError: not_found_error_handler,
-    }
+    exception_handlers = {NotFoundError: not_found_error_handler}
 
     @get(path="/", summary="ListTodos")
     async def list(self, todos_repo: TodoRepository) -> Sequence[Todo]:
@@ -46,7 +45,7 @@ class TodoController(Controller):
         categories_repo: CategoryRepository,
     ) -> Todo:
         """Create a new TODO item."""
-        return todos_repo.add(categories_repo, todo)
+        return todos_repo.add_with_existing_categories(categories_repo, todo)
 
     @patch(path="/{todo_id:int}", summary="UpdateTodo")
     async def update(self, todo_id: int, data: DTOData[Todo], todos_repo: TodoRepository) -> Todo:
