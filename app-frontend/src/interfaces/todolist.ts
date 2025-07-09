@@ -1,3 +1,7 @@
+interface IdOnly {
+  id: number
+}
+
 interface TodoBase {
   title: string
   description?: string
@@ -11,7 +15,7 @@ export interface Todo extends TodoBase {
 
 export interface TodoCreate extends TodoBase {
   completed?: boolean
-  categories?: number[]
+  categories?: IdOnly[]
 }
 
 interface CategoryBase {

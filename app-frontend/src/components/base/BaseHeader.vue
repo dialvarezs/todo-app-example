@@ -36,17 +36,6 @@ const items = [
           </a>
         </nav>
       </div>
-
-      <div class="flex items-center space-x-4">
-        <span class="text-sm text-gray-600 hidden sm:block">Hola, usuario</span>
-        <PButton
-          icon="pi pi-sign-out"
-          label="Cerrar Sesión"
-          severity="secondary"
-          size="small"
-          class="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300"
-        />
-      </div>
     </div>
   </nav>
 </template>

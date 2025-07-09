@@ -9,8 +9,15 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseHeader: typeof import('./src/components/base/BaseHeader.vue')['default']
+    CategoryForm: typeof import('./src/components/CategoryForm.vue')['default']
+    CategorySection: typeof import('./src/components/CategorySection.vue')['default']
+    EmptyState: typeof import('./src/components/EmptyState.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TodoFilters: typeof import('./src/components/TodoFilters.vue')['default']
+    TodoForm: typeof import('./src/components/TodoForm.vue')['default']
+    TodoItem: typeof import('./src/components/TodoItem.vue')['default']
     TodoList: typeof import('./src/components/TodoList.vue')['default']
+    TodoStatsCards: typeof import('./src/components/TodoStatsCards.vue')['default']
   }
 }
