@@ -1,5 +1,9 @@
 FROM oven/bun:1.2 AS build
 
+ARG API_BASE_URL
+
+ENV VITE_API_URL=${API_BASE_URL}
+
 COPY . /app
 WORKDIR /app
 

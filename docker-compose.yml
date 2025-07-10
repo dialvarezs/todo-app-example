@@ -1,0 +1,42 @@
+services:
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-todo_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo_network
+  
+  backend:
+    build: ./app-backend
+    environment:
+      - DEBUG=${DEBUG:-False}
+      - DATABASE_URL=postgresql+psycopg://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@database:5432/${POSTGRES_DB:-todo_db}
+    ports:
+      - "${BACKEND_PORT:-3001}:8000"
+    depends_on:
+      - database
+    networks:
+      - todo_network
+
+  frontend:
+    build:
+      context: ./app-frontend
+      args:
+        - API_BASE_URL=${API_BASE_URL:-http://localhost:3001}
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    networks:
+      - todo_network
+
+volumes:
+  postgres_data:
+
+networks:
+  todo_network:
+    driver: bridge
