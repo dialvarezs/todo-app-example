@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { useTodoStore } from '@/stores/todos'
 import { useCategoryStore } from '@/stores/category'
-import TodoStatsCards from './TodoStatsCards.vue'
-import TodoFilters from './TodoFilters.vue'
-import CategorySection from './CategorySection.vue'
-import TodoItem from './TodoItem.vue'
-import TodoForm from './TodoForm.vue'
-import CategoryForm from './CategoryForm.vue'
-import EmptyState from './EmptyState.vue'
+import { useTodoStore } from '@/stores/todos'
+
+import CategoryForm from '@/components/CategoryForm.vue'
+import CategorySection from '@/components/CategorySection.vue'
+import EmptyState from '@/components/EmptyState.vue'
+import TodoFilters from '@/components/TodoFilters.vue'
+import TodoForm from '@/components/TodoForm.vue'
+import TodoItem from '@/components/TodoItem.vue'
+import TodoStatsCards from '@/components/TodoStatsCards.vue'
 
 const todoStore = useTodoStore()
 const categoryStore = useCategoryStore()
@@ -38,30 +39,30 @@ const filteredTodos = computed(() => {
 })
 
 // Methods
-const clearAllErrors = () => {
+function clearAllErrors() {
   todoStore.clearError()
   categoryStore.clearError()
 }
 
-const handleEditTodo = (todoId: number) => {
+function handleEditTodo(todoId: number) {
   editingTodo.value = todoId
   showAddTodoDialog.value = true
 }
 
-const handleEditCategory = (categoryId: number) => {
+function handleEditCategory(categoryId: number) {
   editingCategory.value = categoryId
   showAddCategoryDialog.value = true
 }
 
-const handleTodoSaved = () => {
+function handleTodoSaved() {
   editingTodo.value = null
 }
 
-const handleCategorySaved = () => {
+function handleCategorySaved() {
   editingCategory.value = null
 }
 
-const handleCreateTodo = () => {
+function handleCreateTodo() {
   editingTodo.value = null
   showAddTodoDialog.value = true
 }
@@ -90,8 +91,12 @@ onMounted(async () => {
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900">Lista de Tareas</h1>
-        <p class="text-gray-600 mt-1">Organiza y gestiona tus tareas diarias</p>
+        <h1 class="text-3xl font-bold text-gray-900">
+          Lista de Tareas
+        </h1>
+        <p class="text-gray-600 mt-1">
+          Organiza y gestiona tus tareas diarias
+        </p>
       </div>
       <div class="flex gap-3">
         <Button
@@ -99,15 +104,15 @@ onMounted(async () => {
           label="Nueva Categoría"
           severity="secondary"
           size="small"
-          @click="showAddCategoryDialog = true"
           class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700"
+          @click="showAddCategoryDialog = true"
         />
         <Button
           icon="pi pi-plus"
           label="Nueva Tarea"
           size="small"
-          @click="handleCreateTodo"
           class="bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+          @click="handleCreateTodo"
         />
       </div>
     </div>
@@ -117,8 +122,8 @@ onMounted(async () => {
       v-if="hasError"
       severity="error"
       :closable="true"
-      @close="clearAllErrors"
       class="rounded-lg"
+      @close="clearAllErrors"
     >
       {{ currentError }}
     </Message>

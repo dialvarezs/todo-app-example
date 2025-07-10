@@ -1,8 +1,8 @@
-import PrimeVue from 'primevue/config'
-import type { App } from 'vue'
 import Aura from '@primeuix/themes/aura'
+import PrimeVue from 'primevue/config'
 import ConfirmationService from 'primevue/confirmationservice'
 
+import type { App } from 'vue'
 
 export default function setupPrimeVue(app: App) {
   app.use(PrimeVue, {

@@ -10,7 +10,7 @@ interface Emits {
 defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const updateFilter = (value: 'all' | 'pending' | 'completed') => {
+function updateFilter(value: 'all' | 'pending' | 'completed') {
   emit('update:modelValue', value)
 }
 </script>
@@ -21,34 +21,34 @@ const updateFilter = (value: 'all' | 'pending' | 'completed') => {
       label="Todas"
       :severity="modelValue === 'all' ? 'primary' : 'secondary'"
       size="small"
-      @click="updateFilter('all')"
       :class="
         modelValue === 'all'
           ? 'bg-blue-600 border-blue-600'
           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
       "
+      @click="updateFilter('all')"
     />
     <Button
       label="Pendientes"
       :severity="modelValue === 'pending' ? 'primary' : 'secondary'"
       size="small"
-      @click="updateFilter('pending')"
       :class="
         modelValue === 'pending'
           ? 'bg-blue-600 border-blue-600'
           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
       "
+      @click="updateFilter('pending')"
     />
     <Button
       label="Completadas"
       :severity="modelValue === 'completed' ? 'primary' : 'secondary'"
       size="small"
-      @click="updateFilter('completed')"
       :class="
         modelValue === 'completed'
           ? 'bg-blue-600 border-blue-600'
           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
       "
+      @click="updateFilter('completed')"
     />
   </div>
 </template>

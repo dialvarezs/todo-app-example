@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { useConfirm } from 'primevue/useconfirm'
+
 import { useCategoryStore } from '@/stores/category'
-import { useConfirm } from 'primevue/useconfirm';
 
 interface Emits {
-  (e: 'edit-category', categoryId: number): void
+  (e: 'editCategory', categoryId: number): void
 }
 
 const emit = defineEmits<Emits>()
@@ -11,12 +12,12 @@ const categoryStore = useCategoryStore()
 
 const confirm = useConfirm()
 
-const handleDeleteCategory = async (categoryId: number) => {
+async function handleDeleteCategory(categoryId: number) {
   confirm.require({
     message: '¿Estás seguro de que quieres eliminar esta categoría?',
     acceptProps: {
       label: 'Eliminar',
-      severity: 'danger'
+      severity: 'danger',
     },
     rejectProps: {
       label: 'Cancelar',
@@ -24,19 +25,19 @@ const handleDeleteCategory = async (categoryId: number) => {
     },
     accept: async () => {
       await categoryStore.removeCategory(categoryId)
-    }
+    },
   })
 }
 
-const handleEditCategory = (categoryId: number) => {
-  emit('edit-category', categoryId)
+function handleEditCategory(categoryId: number) {
+  emit('editCategory', categoryId)
 }
 </script>
 
 <template>
   <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
     <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-      <i class="pi pi-tags text-blue-600"></i>
+      <i class="pi pi-tags text-blue-600" />
       Categorías
     </h2>
     <div class="flex flex-wrap gap-2">
@@ -45,8 +46,8 @@ const handleEditCategory = (categoryId: number) => {
         :key="category.id"
         :label="category.name"
         class="cursor-pointer bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors"
-        @click="handleEditCategory(category.id)"
         removable
+        @click="handleEditCategory(category.id)"
       >
         <template #removeicon>
           <i class="pi pi-times-circle" @click="(e) => { e.stopPropagation(); handleDeleteCategory(category.id) }" />

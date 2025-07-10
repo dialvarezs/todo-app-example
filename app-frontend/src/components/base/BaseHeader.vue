@@ -18,9 +18,11 @@ const items = [
       <div class="flex items-center space-x-6">
         <div class="flex items-center space-x-2">
           <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <i class="pi pi-check text-white font-bold"></i>
+            <i class="pi pi-check text-white font-bold" />
           </div>
-          <h1 class="text-xl font-bold text-gray-900">TodoApp</h1>
+          <h1 class="text-xl font-bold text-gray-900">
+            TodoApp
+          </h1>
         </div>
 
         <nav class="hidden md:flex space-x-1">
@@ -28,10 +30,10 @@ const items = [
             v-for="item in items"
             :key="item.label"
             href="#"
-            @click.prevent="item.command?.()"
             class="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+            @click.prevent="item.command?.()"
           >
-            <i :class="item.icon" class="mr-2"></i>
+            <i :class="item.icon" class="mr-2" />
             {{ item.label }}
           </a>
         </nav>

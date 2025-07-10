@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useTodoStore } from '@/stores/todos'
 import { useCategoryStore } from '@/stores/category'
+import { useTodoStore } from '@/stores/todos'
+
 import type { TodoCreate } from '@/interfaces/todolist'
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 
 interface Emits {
   (e: 'update:visible', value: boolean): void
-  (e: 'todo-saved'): void
+  (e: 'todoSaved'): void
 }
 
 const props = defineProps<Props>()
@@ -26,10 +27,10 @@ const todoForm = ref<TodoCreate>({
 })
 
 const categoryOptions = computed(() =>
-  categoryStore.categories
+  categoryStore.categories,
 )
 
-const resetForm = () => {
+function resetForm() {
   todoForm.value = {
     title: '',
     description: '',
@@ -38,22 +39,24 @@ const resetForm = () => {
   }
 }
 
-const handleSubmit = async () => {
+async function handleSubmit() {
   try {
     if (props.editingTodoId) {
       await todoStore.updateTodo(props.editingTodoId, todoForm.value)
-    } else {
+    }
+    else {
       await todoStore.addTodo(todoForm.value)
     }
     emit('update:visible', false)
-    emit('todo-saved')
+    emit('todoSaved')
     resetForm()
-  } catch {
+  }
+  catch {
     // Error is handled in the store
   }
 }
 
-const handleCancel = () => {
+function handleCancel() {
   emit('update:visible', false)
   resetForm()
 }
@@ -63,16 +66,17 @@ watch(
   () => props.editingTodoId,
   (todoId) => {
     if (todoId) {
-      const todo = todoStore.todos.find((t) => t.id === todoId)
+      const todo = todoStore.todos.find(t => t.id === todoId)
       if (todo) {
         todoForm.value = {
           title: todo.title,
           description: todo.description || '',
           completed: todo.completed,
-          categories: todo.categories.map((cat) => ({ id: cat.id })),
+          categories: todo.categories.map(cat => ({ id: cat.id })),
         }
       }
-    } else {
+    }
+    else {
       resetForm()
     }
   },

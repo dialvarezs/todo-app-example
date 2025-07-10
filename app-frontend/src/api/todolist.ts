@@ -1,5 +1,6 @@
-import type { Todo, TodoCreate, Category, CategoryCreate } from '@/interfaces/todolist'
 import { apiFetch } from '.'
+
+import type { Category, CategoryCreate, Todo, TodoCreate } from '@/interfaces/todolist'
 
 // Todo API functions
 export async function getTodos(): Promise<Todo[]> {

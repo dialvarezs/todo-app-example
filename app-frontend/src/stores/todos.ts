@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
-import type { Todo, TodoCreate } from '@/interfaces/todolist'
+
 import * as api from '@/api/todolist'
+
+import type { Todo, TodoCreate } from '@/interfaces/todolist'
 
 export const useTodoStore = defineStore('todo', () => {
   // State
@@ -9,8 +11,8 @@ export const useTodoStore = defineStore('todo', () => {
   const error = ref<string | null>(null)
 
   // Computed
-  const completedTodos = computed(() => todos.value.filter((todo) => todo.completed))
-  const pendingTodos = computed(() => todos.value.filter((todo) => !todo.completed))
+  const completedTodos = computed(() => todos.value.filter(todo => todo.completed))
+  const pendingTodos = computed(() => todos.value.filter(todo => !todo.completed))
 
   // Actions
   const setLoading = (value: boolean) => {
@@ -31,9 +33,11 @@ export const useTodoStore = defineStore('todo', () => {
       setLoading(true)
       clearError()
       todos.value = await api.getTodos()
-    } catch (err) {
+    }
+    catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch todos')
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }
@@ -44,10 +48,12 @@ export const useTodoStore = defineStore('todo', () => {
       clearError()
       const newTodo = await api.createTodo(todoData)
       todos.value.push(newTodo)
-    } catch (err) {
+    }
+    catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create todo')
       throw err
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }
@@ -57,14 +63,16 @@ export const useTodoStore = defineStore('todo', () => {
       setLoading(true)
       clearError()
       const updatedTodo = await api.updateTodo(id, todoData)
-      const index = todos.value.findIndex((todo) => todo.id === id)
+      const index = todos.value.findIndex(todo => todo.id === id)
       if (index !== -1) {
         todos.value[index] = updatedTodo
       }
-    } catch (err) {
+    }
+    catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update todo')
       throw err
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }
@@ -74,29 +82,31 @@ export const useTodoStore = defineStore('todo', () => {
       setLoading(true)
       clearError()
       await api.deleteTodo(id)
-      todos.value = todos.value.filter((todo) => todo.id !== id)
-    } catch (err) {
+      todos.value = todos.value.filter(todo => todo.id !== id)
+    }
+    catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete todo')
       throw err
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }
 
   const toggleTodoComplete = async (id: number) => {
-    const todo = todos.value.find((t) => t.id === id)
+    const todo = todos.value.find(t => t.id === id)
     if (todo) {
       await updateTodo(id, { completed: !todo.completed })
     }
   }
 
   const getTodoById = (id: number) => {
-    return todos.value.find((todo) => todo.id === id)
+    return todos.value.find(todo => todo.id === id)
   }
 
   const getTodosByCategory = (categoryId: number) => {
-    return todos.value.filter((todo) =>
-      todo.categories.some((category) => category.id === categoryId),
+    return todos.value.filter(todo =>
+      todo.categories.some(category => category.id === categoryId),
     )
   }
 

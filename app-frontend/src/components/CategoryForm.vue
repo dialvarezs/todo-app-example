@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useCategoryStore } from '@/stores/category'
+
 import type { CategoryCreate } from '@/interfaces/todolist'
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 
 interface Emits {
   (e: 'update:visible', value: boolean): void
-  (e: 'category-saved'): void
+  (e: 'categorySaved'): void
 }
 
 const props = defineProps<Props>()
@@ -21,29 +22,31 @@ const categoryForm = ref<CategoryCreate>({
   description: '',
 })
 
-const resetForm = () => {
+function resetForm() {
   categoryForm.value = {
     name: '',
     description: '',
   }
 }
 
-const handleSubmit = async () => {
+async function handleSubmit() {
   try {
     if (props.editingCategoryId) {
       await categoryStore.updateCategory(props.editingCategoryId, categoryForm.value)
-    } else {
+    }
+    else {
       await categoryStore.addCategory(categoryForm.value)
     }
     emit('update:visible', false)
-    emit('category-saved')
+    emit('categorySaved')
     resetForm()
-  } catch {
+  }
+  catch {
     // Error is handled in the store
   }
 }
 
-const handleCancel = () => {
+function handleCancel() {
   emit('update:visible', false)
   resetForm()
 }
@@ -53,14 +56,15 @@ watch(
   () => props.editingCategoryId,
   (categoryId) => {
     if (categoryId) {
-      const category = categoryStore.categories.find((c) => c.id === categoryId)
+      const category = categoryStore.categories.find(c => c.id === categoryId)
       if (category) {
         categoryForm.value = {
           name: category.name,
           description: category.description || '',
         }
       }
-    } else {
+    }
+    else {
       resetForm()
     }
   },
