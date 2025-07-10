@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
 import { useTodoStore } from '@/stores/todos'
 import { useCategoryStore } from '@/stores/category'
 import type { TodoCreate } from '@/interfaces/todolist'
@@ -27,10 +26,7 @@ const todoForm = ref<TodoCreate>({
 })
 
 const categoryOptions = computed(() =>
-  categoryStore.categories.map((cat) => ({
-    label: cat.name,
-    value: cat.id,
-  })),
+  categoryStore.categories
 )
 
 const resetForm = () => {
@@ -73,7 +69,7 @@ watch(
           title: todo.title,
           description: todo.description || '',
           completed: todo.completed,
-          categories: todo.categories.map((cat) => cat.id),
+          categories: todo.categories.map((cat) => ({ id: cat.id })),
         }
       }
     } else {
@@ -85,7 +81,7 @@ watch(
 </script>
 
 <template>
-  <PDialog
+  <Dialog
     :visible="visible"
     :header="editingTodoId ? 'Editar Tarea' : 'Nueva Tarea'"
     modal
@@ -94,44 +90,44 @@ watch(
     @hide="resetForm"
   >
     <div class="flex flex-col gap-4">
-      <div>
-        <label for="title" class="block text-sm font-medium mb-2">Título *</label>
-        <PInputText id="title" v-model="todoForm.title" class="w-full" required />
-      </div>
+      <FloatLabel variant="in">
+        <InputText id="title" v-model="todoForm.title" class="w-full" required />
+        <label for="title">Título *</label>
+      </FloatLabel>
 
-      <div>
-        <label for="description" class="block text-sm font-medium mb-2">Descripción</label>
-        <PTextarea id="description" v-model="todoForm.description" class="w-full" rows="3" />
-      </div>
+      <FloatLabel variant="in">
+        <Textarea id="description" v-model="todoForm.description" class="w-full" rows="3" />
+        <label for="description">Descripción</label>
+      </FloatLabel>
 
-      <div>
-        <label for="categories" class="block text-sm font-medium mb-2">Categorías</label>
-        <PMultiSelect
+      <FloatLabel variant="in">
+        <MultiSelect
           id="categories"
           v-model="todoForm.categories"
           :options="categoryOptions"
-          option-label="label"
-          option-value="value"
+          option-label="name"
+          :option-value="(cat) => ({ id: cat.id })"
           placeholder="Seleccionar categorías"
           class="w-full"
         />
-      </div>
+        <label for="categories">Categorías</label>
+      </FloatLabel>
 
-      <div class="flex align-items-center gap-2">
-        <PCheckbox id="completed" v-model="todoForm.completed" />
+      <div v-if="editingTodoId" class="flex align-items-center gap-2">
+        <Checkbox id="completed" v-model="todoForm.completed" binary />
         <label for="completed" class="text-sm font-medium">Completada</label>
       </div>
     </div>
 
     <template #footer>
       <div class="flex justify-end gap-2">
-        <PButton label="Cancelar" severity="secondary" @click="handleCancel" />
-        <PButton
+        <Button label="Cancelar" severity="secondary" @click="handleCancel" />
+        <Button
           :label="editingTodoId ? 'Actualizar' : 'Crear'"
           :disabled="!todoForm.title.trim()"
           @click="handleSubmit"
         />
       </div>
     </template>
-  </PDialog>
+  </Dialog>
 </template>

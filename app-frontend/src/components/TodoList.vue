@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
 import { useTodoStore } from '@/stores/todos'
 import { useCategoryStore } from '@/stores/category'
 import TodoStatsCards from './TodoStatsCards.vue'
@@ -67,6 +66,20 @@ const handleCreateTodo = () => {
   showAddTodoDialog.value = true
 }
 
+// Watch for dialog close to reset editingTodo
+watch(showAddTodoDialog, (visible) => {
+  if (!visible) {
+    editingTodo.value = null
+  }
+})
+
+// Watch for dialog close to reset editingCategory
+watch(showAddCategoryDialog, (visible) => {
+  if (!visible) {
+    editingCategory.value = null
+  }
+})
+
 onMounted(async () => {
   await Promise.all([todoStore.fetchTodos(), categoryStore.fetchCategories()])
 })
@@ -81,7 +94,7 @@ onMounted(async () => {
         <p class="text-gray-600 mt-1">Organiza y gestiona tus tareas diarias</p>
       </div>
       <div class="flex gap-3">
-        <PButton
+        <Button
           icon="pi pi-plus"
           label="Nueva Categoría"
           severity="secondary"
@@ -89,7 +102,7 @@ onMounted(async () => {
           @click="showAddCategoryDialog = true"
           class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700"
         />
-        <PButton
+        <Button
           icon="pi pi-plus"
           label="Nueva Tarea"
           size="small"
@@ -100,7 +113,7 @@ onMounted(async () => {
     </div>
 
     <!-- Error Message -->
-    <PMessage
+    <Message
       v-if="hasError"
       severity="error"
       :closable="true"
@@ -108,7 +121,7 @@ onMounted(async () => {
       class="rounded-lg"
     >
       {{ currentError }}
-    </PMessage>
+    </Message>
 
     <!-- Stats Cards -->
     <TodoStatsCards />
@@ -121,7 +134,7 @@ onMounted(async () => {
 
     <!-- Loading Spinner -->
     <div v-if="isLoading" class="flex justify-center items-center py-12">
-      <PProgressSpinner class="w-8 h-8" />
+      <ProgressSpinner class="w-8 h-8" />
       <span class="ml-3 text-gray-600">Cargando...</span>
     </div>
 

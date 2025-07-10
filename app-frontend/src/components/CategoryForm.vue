@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { useCategoryStore } from '@/stores/category'
 import type { CategoryCreate } from '@/interfaces/todolist'
 
@@ -70,7 +69,7 @@ watch(
 </script>
 
 <template>
-  <PDialog
+  <Dialog
     :visible="visible"
     :header="editingCategoryId ? 'Editar Categoría' : 'Nueva Categoría'"
     modal
@@ -79,31 +78,31 @@ watch(
     @hide="resetForm"
   >
     <div class="flex flex-col gap-4">
-      <div>
-        <label for="categoryName" class="block text-sm font-medium mb-2">Nombre *</label>
-        <PInputText id="categoryName" v-model="categoryForm.name" class="w-full" required />
-      </div>
+      <FloatLabel variant="in">
+        <InputText id="categoryName" v-model="categoryForm.name" class="w-full" required />
+        <label for="categoryName">Nombre *</label>
+      </FloatLabel>
 
-      <div>
-        <label for="categoryDescription" class="block text-sm font-medium mb-2">Descripción</label>
-        <PTextarea
+      <FloatLabel variant="in">
+        <Textarea
           id="categoryDescription"
           v-model="categoryForm.description"
           class="w-full"
           rows="3"
         />
-      </div>
+        <label for="categoryDescription">Descripción</label>
+      </FloatLabel>
     </div>
 
     <template #footer>
       <div class="flex justify-end gap-2">
-        <PButton label="Cancelar" severity="secondary" @click="handleCancel" />
-        <PButton
+        <Button label="Cancelar" severity="secondary" @click="handleCancel" />
+        <Button
           :label="editingCategoryId ? 'Actualizar' : 'Crear'"
           :disabled="!categoryForm.name.trim()"
           @click="handleSubmit"
         />
       </div>
     </template>
-  </PDialog>
+  </Dialog>
 </template>

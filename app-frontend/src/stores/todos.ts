@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
 import type { Todo, TodoCreate } from '@/interfaces/todolist'
 import * as api from '@/api/todolist'
 

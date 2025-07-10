@@ -28,7 +28,7 @@ const emit = defineEmits<Emits>()
               : 'No hay tareas completadas aún.'
         }}
       </p>
-      <PButton
+      <Button
         v-if="filter === 'all'"
         icon="pi pi-plus"
         label="Crear Primera Tarea"

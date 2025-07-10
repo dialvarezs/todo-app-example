@@ -48,15 +48,28 @@ class TodoController(Controller):
         """Create a new TODO item."""
         return todos_repo.add_with_existing_categories(categories_repo, data, auto_commit=True)
 
-    @patch(path="/{todo_id:int}", summary="UpdateTodo", dto=TodoUpdateDTO)
-    async def update(self, todo_id: int, data: DTOData[Todo], todos_repo: TodoRepository) -> Todo:
+    @patch(
+        path="/{todo_id:int}",
+        summary="UpdateTodo",
+        dto=TodoUpdateDTO,
+        dependencies={"categories_repo": Provide(provide_category_repository)},
+    )
+    async def update(
+        self,
+        todo_id: int,
+        data: DTOData[Todo],
+        todos_repo: TodoRepository,
+        categories_repo: CategoryRepository,
+    ) -> Todo:
         """Update an existing TODO item."""
-        todo, _ = todos_repo.get_and_update(
-            id=todo_id, **data.as_builtins(), match_fields=["id"], auto_commit=True
+        return todos_repo.update_with_existing_categories(
+            categories_repo,
+            todo_id,
+            data,
+            auto_commit=True,
         )
-        return todo
 
     @delete(path="/{todo_id:int}", summary="DeleteTodo")
     async def delete(self, todo_id: int, todos_repo: TodoRepository) -> None:
         """Delete a TODO item by ID."""
-        todos_repo.delete(todo_id)
+        todos_repo.delete(todo_id, auto_commit=True)

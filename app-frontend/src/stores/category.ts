@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 import type { Category, CategoryCreate } from '@/interfaces/todolist'
 import * as api from '@/api/todolist'
 

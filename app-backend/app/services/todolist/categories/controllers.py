@@ -55,4 +55,4 @@ class CategoryController(Controller):
     @delete(path="/{category_id:int}", summary="DeleteCategory")
     async def delete(self, category_id: int, categories_repo: CategoryRepository) -> None:
         """Delete a category by ID."""
-        categories_repo.delete(category_id)
+        categories_repo.delete(category_id, auto_commit=True)

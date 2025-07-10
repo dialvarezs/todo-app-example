@@ -16,6 +16,12 @@ export async function apiFetch<T>(endpoint: string, options: RequestInitWithJson
     ...options,
   })
 
-  const jsonResponse = await response.json()
+  // Check if response has a body
+  const text = await response.text()
+  if (!text) {
+    return undefined as T
+  }
+
+  const jsonResponse = JSON.parse(text)
   return changeKeys.camelCase(jsonResponse, 5) as T
 }

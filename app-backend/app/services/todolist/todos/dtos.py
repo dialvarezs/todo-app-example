@@ -9,12 +9,12 @@ class TodoDTO(SQLAlchemyDTO[Todo]):
 
 class TodoCreateDTO(SQLAlchemyDTO[Todo]):
     config = SQLAlchemyDTOConfig(
-        exclude={"id"},
+        exclude={"id", "categories.0.name", "categories.0.description"},
     )
 
 
 class TodoUpdateDTO(SQLAlchemyDTO[Todo]):
     config = SQLAlchemyDTOConfig(
-        exclude={"id"},
+        exclude={"id", "categories.0.name", "categories.0.description"},
         partial=True,
     )

@@ -17,7 +17,7 @@ const updateFilter = (value: 'all' | 'pending' | 'completed') => {
 
 <template>
   <div class="flex flex-wrap gap-2">
-    <PButton
+    <Button
       label="Todas"
       :severity="modelValue === 'all' ? 'primary' : 'secondary'"
       size="small"
@@ -28,7 +28,7 @@ const updateFilter = (value: 'all' | 'pending' | 'completed') => {
           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
       "
     />
-    <PButton
+    <Button
       label="Pendientes"
       :severity="modelValue === 'pending' ? 'primary' : 'secondary'"
       size="small"
@@ -39,7 +39,7 @@ const updateFilter = (value: 'all' | 'pending' | 'completed') => {
           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
       "
     />
-    <PButton
+    <Button
       label="Completadas"
       :severity="modelValue === 'completed' ? 'primary' : 'secondary'"
       size="small"

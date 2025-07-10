@@ -4,7 +4,9 @@ from app.models.todolist import Category
 
 
 class CategoryDTO(SQLAlchemyDTO[Category]):
-    config = SQLAlchemyDTOConfig()
+    config = SQLAlchemyDTOConfig(
+        exclude={"todos"},
+    )
 
 
 class CategoryCreateDTO(SQLAlchemyDTO[Category]):
